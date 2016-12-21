@@ -14,7 +14,7 @@ export const repositoryReducer = (state=initialRepositoryState, action) => {
   // if action is RATE_REPO, then find repository matching and return new state
   else if (action.type === actions.RATE_REPO) {
     const index = state.findIndex(repository => {
-      repository.name === action.repository;
+      return repository.name === action.repository;
     });
 
     // if can't find repository in state
