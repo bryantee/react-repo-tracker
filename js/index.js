@@ -4,10 +4,9 @@ import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 
 // Components
-import RepositoryList from './Components/repository-list'
+import RepositoryList from './components/repository-list'
 
-import * as actions from './actions/index'
-import { initialRepositoryState, repositoryReducer } from './reducers/index'
+// store
 import store from './store'
 
 document.addEventListener('DOMContentLoaded', () => {

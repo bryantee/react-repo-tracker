@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Repository from './repository'
+import * as actions from '../actions/index'
 
 export class RepositoryList extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export class RepositoryList extends React.Component {
 
   addRepository() {
     const repositoryName = this.repositoryNameInput.value;
-    // TODO: add repo to state
+    this.props.dispatch(actions.addRepo(repositoryName))
   }
 
   render() {
@@ -20,11 +21,11 @@ export class RepositoryList extends React.Component {
 
     return (
       <div className="repository-list">
-        {repositories}
         <input type="text" ref={ref => this.repositoryNameInput = ref} />
         <button type="button" onClick={this.addRepository}>
           Add repository
         </button>
+        {repositories}
       </div>
     )
   }
