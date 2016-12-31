@@ -9,6 +9,13 @@ export class Repository extends React.Component {
     this.changeRating = this.changeRating.bind(this);
   }
 
+  componentDidMount() {
+    console.log(`Repo Name: ${this.props.repository.name}`)
+    this.props.dispatch(
+      actions.fetchDescription(this.props.repository.name)  // Not using action creator. Why?
+    );
+  }
+
   changeRating(rating) {
     this.props.dispatch(actions.rateRepo(this.props.repository.name, rating))
   }
@@ -16,7 +23,7 @@ export class Repository extends React.Component {
   render() {
     return (
       <div className="repository">
-      {this.props.repository.name}
+      {this.props.repository.name} - {this.props.repository.description}
       &nbsp;
       <StarRater rating={this.props.repository.rating}
                  onChange={this.changeRating} />
@@ -25,4 +32,8 @@ export class Repository extends React.Component {
   }
 }
 
+// NOTE:
+// Why connect with Repository?
+// Shouldn't props be coming from repository-list component?
+// mapStateToProps function?
 export default connect()(Repository);

@@ -28,5 +28,46 @@ export const repositoryReducer = (state=initialRepositoryState, action) => {
     const newRepository = Object.assign({}, state[index], {rating: action.rating});
     return [...before, newRepository, ...after];
   }
+  // now for ajax requests instead of manual entry
+  else if (action.type === actions.FETCH_DESCRIPTION_SUCCESS) {
+    console.log('State', state);
+    console.log('Action repo', action.repository);
+    // find the index of the matching repository
+    const index = state.findIndex(repository =>
+      repository.name === action.repository
+    );
+
+    if (index === -1) {
+      throw new Error('Could not find repository');
+    }
+
+    const before = state.slice(0, index);
+    const after = state.slice(index + 1);
+    const newRepository = Object.assign({}, state[index], {
+      description: action.description
+    });
+    return [...before, newRepository, ...after];
+  }
+  else if (action.type === actions.FETCH_DESCRIPTION_ERROR) {
+    console.log(`Error: ${action.error}`);
+    // again, find the index
+    const index = state.findIndex(repository =>
+      repository.name === action.repository
+    );
+
+    // if repo not found in findIndex loookup:
+    if (index === -1) {
+      throw new Error('Could not find repository');
+    }
+
+    const before = state.slice(0, index);
+    const after = state.slice(index + 1);
+    const newRepository = Object.assign({}, state[index], {
+      description: 'N/A'
+    });
+    return [...before, newRepository, ...after];
+  }
+
+  // if no action to change state
   return state;
 };
